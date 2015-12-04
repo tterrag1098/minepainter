@@ -135,13 +135,13 @@ public class DroppedSculptureRenderer implements IItemRenderer{
 		            GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
 		            GL11.glRotatef(-90.0F, 0.0F, 1.0F, 0.0F);
 					rb.cull(sculpture, x, y, z);
-		            rb.renderBlockAsItem(sb, 0, 1.0F);
+		            rb.renderBlockAsItem(sb.getCurrent(), sb.getCurrentMeta(), 1.0F);
 		            GL11.glEnable(GL11.GL_CULL_FACE);
 		            GL11.glPopMatrix();
 				}else {
 					GL11.glPushMatrix();
 					rb.cull(sculpture, x, y, z);
-					rb.renderBlockAsItem(sb, 0, 1f);
+					rb.renderBlockAsItem(sb.getCurrent(), sb.getCurrentMeta(), 1f);
 					GL11.glPopMatrix();
 				}
 			}

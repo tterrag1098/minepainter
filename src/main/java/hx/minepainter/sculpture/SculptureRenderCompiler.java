@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 
 import hx.minepainter.ModMinePainter;
 import hx.utils.Debug;
+import hx.utils.IBlockAccessWrapper;
 
 import org.lwjgl.opengl.GL11;
 
@@ -79,6 +80,7 @@ public class SculptureRenderCompiler {
 	}
 	
 	public void build(BlockSlice slice, int pass){
+	    IBlockAccessWrapper wrapper = new IBlockAccessWrapper(slice);
 		rb.blockAccess = slice;
 		SculptureBlock sculpture = ModMinePainter.sculpture.block;
 		
@@ -95,20 +97,21 @@ public class SculptureRenderCompiler {
 				int x = (i >> 6) & 7;
 				int y = (i >> 3) & 7;
 				int z = (i >> 0) & 7;
-	
+					
 				Block b = slice.getBlock(x, y, z);
 				if(b == Blocks.air)continue;
 				if(!b.canRenderInPass(pass))continue;
 				int meta = slice.getBlockMetadata(x, y, z);
 				sculpture.setCurrentBlock(b, meta);
+				wrapper.setFakeBlock(b, x, y, z, meta);
 				
 				tes.setTranslation(-x, -y, -z);
 				sculpture.setBlockBounds(x/8f, y/8f, z/8f, (x+1)/8f, (y+1)/8f, (z+1)/8f);
 				try{
-					rb.renderBlockByRenderType(sculpture, x,y,z);
+					rb.renderBlockByRenderType(sculpture.getCurrent(), x,y,z);
 				}catch(RuntimeException e){
 					sculpture.useStandardRendering();
-					rb.renderBlockByRenderType(sculpture, x,y,z);
+					rb.renderBlockByRenderType(sculpture.getCurrent(), x,y,z);
 				}
 			}
 		}else{

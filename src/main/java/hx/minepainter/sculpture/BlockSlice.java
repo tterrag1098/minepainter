@@ -1,14 +1,13 @@
 package hx.minepainter.sculpture;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Vec3Pool;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.util.ForgeDirection;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
  
 @SideOnly(Side.CLIENT)
 public class BlockSlice implements IBlockAccess{
@@ -51,7 +50,7 @@ public class BlockSlice implements IBlockAccess{
 
 	@Override
 	public Block getBlock(int x, int y, int z) {
-		if(sculpture != null && sculpture.contains(x, y, z))
+		if(sculpture != null && Sculpture.contains(x, y, z))
 			return sculpture.getBlockAt(x, y, z, this);
 		if(iba == null)return Blocks.air;
 		return iba.getBlock(this.x + cap(x), this.y + cap(y), this.z + cap(z));
@@ -72,7 +71,7 @@ public class BlockSlice implements IBlockAccess{
 
 	@Override
 	public int getBlockMetadata(int x,int y,int z) {
-		if(sculpture != null && sculpture.contains(x, y, z))
+		if(sculpture != null && Sculpture.contains(x, y, z))
 			return sculpture.getMetaAt(x, y, z, this);
 		if(iba == null)return 0;
 		return iba.getBlockMetadata(this.x + cap(x), this.y + cap(y), this.z + cap(z));
@@ -80,7 +79,7 @@ public class BlockSlice implements IBlockAccess{
 
 	@Override
 	public boolean isAirBlock(int x, int y, int z) {
-		if(sculpture != null && sculpture.contains(x, y, z))
+		if(sculpture != null && Sculpture.contains(x, y, z))
 			return sculpture.getBlockAt(x, y, z, this) == Blocks.air;
 		if(iba == null)return true;
 		return iba.isAirBlock(this.x + cap(x), this.y + cap(y), this.z + cap(z));
@@ -104,12 +103,6 @@ public class BlockSlice implements IBlockAccess{
 	public boolean extendedLevelsInChunkCache() {
 		if(iba == null)return false;
 		return iba.extendedLevelsInChunkCache();
-	}
-
-	@Override
-	public Vec3Pool getWorldVec3Pool() {
-		if(iba == null)return null;
-		return iba.getWorldVec3Pool();
 	}
 
 	@Override

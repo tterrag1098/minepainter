@@ -42,7 +42,7 @@ public class PieceRenderer implements IItemRenderer {
 	@Override
 	public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
 		
-		if(is == null) is = new ItemStack(ModMinePainter.sculpture.block);
+		if(is == null) is = new ItemStack(ModMinePainter.sculpture.block.getCurrent());
 		SculptureBlock sculpture = ModMinePainter.sculpture.block;
 		PieceItem piece = Utils.getItem(item); 
 		sculpture.setCurrentBlock(piece.getEditBlock(item), piece.getEditMeta(item));
@@ -60,7 +60,7 @@ public class PieceRenderer implements IItemRenderer {
 			GL11.glScalef(.5f,.5f,.5f);
 			mc.renderEngine.bindTexture(TextureMap.locationBlocksTexture);
 			RenderBlocks rb = (RenderBlocks) (data[0]);
-			rb.renderBlockAsItem(sculpture, 0, 1f);
+			rb.renderBlockAsItem(sculpture.getCurrent(), 0, 1f);
 
 		}else
 		{

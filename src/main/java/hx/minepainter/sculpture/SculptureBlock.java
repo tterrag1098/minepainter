@@ -59,6 +59,13 @@ public class SculptureBlock extends BlockContainer{
 		this.dropBlockAsItem(w, x, y, z, is);
 	}
 	
+	public Block getCurrent() {
+	    return current;
+	}
+	
+	public int getCurrentMeta() {
+        return meta;
+    }
 	
 	public SculptureBlock() {
 		super(Material.rock);
